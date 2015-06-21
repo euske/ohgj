@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>click-a-clock</title>
+<style>
+b { font-size: 120%; }
+</style>
+<script language="javascript" src="src/utils.js"></script>
+<script language="javascript" src="src/tilemap.js"></script>
+<script language="javascript" src="src/actor.js"></script>
+<script language="javascript" src="src/scene.js"></script>
+<script language="javascript" src="src/title.js"></script>
+<script language="javascript" src="src/game.js"></script>
+<script language="javascript" src="src/main.js"></script>
+<script language="javascript" src="game1/const.js"></script>
+<script language="javascript" src="game1/clock.js"></script>
+<script language="javascript" src="game1/level.js"></script>
+<body text="white" link="cyan" vlink="cyan" bgcolor="black" onload="run();">
+<h1 align=center>click-a-clock</h1>
+<p>
+Game made for 1hgj, June 21, 2015.
+<p>
+<strong>Notice:</strong> this game lasts forever. <code>&gt;_&gt;</code>
+<div style="margin: 1em;" align=center>
+  <div style="position:relative; width:640px; height:480px;">
+    <canvas id="main" 
+	    style="position:absolute; top:0; left:0; background:gray;"
+	    width="640" height="480"></canvas>
+  </div>
+</div>
+
+<div style="display:none;">
+  <img id="font_b" src="assets/font_b.png">
+  <img id="font_w" src="assets/font_w.png">
+  <audio id="good" type="audio/mpeg" src="assets/good.mp3" preload="auto"></audio>
+  <audio id="bad" type="audio/mpeg" src="assets/bad.mp3" preload="auto"></audio>
+</div>
+
+<div>
+Source code: <a href="https://github.com/euske/jscs">https://github.com/euske/jscs</a>
+</div>
+</body>
