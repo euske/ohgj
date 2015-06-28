@@ -97,6 +97,7 @@ Level.prototype.update = function ()
     this.addObject(obj);
   }
   
+  this.score_node.style.color = COLORS[this.ticks % COLORS.length];
 };
 
 Level.prototype.render = function (ctx, bx, by)
@@ -143,7 +144,7 @@ Level.prototype.match = function (px, w, color)
   for (var i = 0; ; i++) {
     var x = (i*rw-this.z);
     if (this.window.width < x) break;
-    if (x < px && px+w < x+rw) {
+    if (x < px+w && px < x+rw) {
       if (color == (i % COLORS.length)) return true;
     }
   }
@@ -186,8 +187,10 @@ Level.prototype.init = function ()
   }
   this.player.picked.subscribe(player_picked);
 
-  this.score_node = game.addElement(new Rectangle(10, 10, 100, 20));
+  this.score_node = game.addElement(new Rectangle(10, 10, 200, 40));
   this.score_node.align = 'left';
+  this.score_node.style['font-weight'] = 'bold';
+  this.score_node.style['font-size'] = '200%';
   this.score_node.style.color = 'white';
   this.score = 0;
   this.updateScore();

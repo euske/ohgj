@@ -236,7 +236,7 @@ Game.prototype.init = function (state)
   switch (state) {
   case 0:
     this.scene = new Title(this, false);
-    this.scene.init('<b>Sample Game</b><p>Made with JSCS<p>Press Enter to start.');
+    this.scene.init("<b>Rainbow Racing</b><p>Collect thingies when they have matching colors.<br>(7 points to finish - that's the number of rainbow colors in Japanese.)<p>Press Enter to start.");
     this.scene.changed.subscribe(title_changed);
     this.music = null;
     break;
