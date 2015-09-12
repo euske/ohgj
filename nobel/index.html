@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>ohgj/nobel</title>
+<style>
+b { font-size: 120%; }
+u { font-size: 120%; font-weight: bold; color: red; }
+</style>
+<script language="javascript" src="src/utils.js"></script>
+<script language="javascript" src="src/geom.js"></script>
+<script language="javascript" src="src/tilemap.js"></script>
+<script language="javascript" src="src/actor.js"></script>
+<script language="javascript" src="src/scene.js"></script>
+<script language="javascript" src="src/app.js"></script>
+<script language="javascript" src="src/main.js"></script>
+<script language="javascript" src="src/game.js"></script>
+<body text="white" link="cyan" vlink="cyan" bgcolor="black" onload="run(Game);">
+<h1 align=center>Nobel</h1>
+<p>
+Theme: Dynamite
+<p>
+1HGJ, Sep. 13th, 2015
+<p>
+<strong>Objective:</strong>
+Pick all the dynamites. <u>DO NOT</u> save pigs and kitties.
+
+<div style="margin: 1em;" align=center>
+  <div style="position:relative; width:640px; height:480px;">
+    <canvas id="main" 
+	    style="position:absolute; top:0; left:0; background:gray;"
+	    width="640" height="480"></canvas>
+  </div>
+</div>
+
+<div style="display:none;">
+  <img id="font_b" src="assets/font_b.png">
+  <img id="font_w" src="assets/font_w.png">
+  <img id="sprites" src="assets/sprites.png">
+  <img id="background" src="assets/background.png">
+  <audio id="jump" type="audio/mpeg" src="assets/jump.mp3" preload="auto"></audio>
+  <audio id="pick" type="audio/mpeg" src="assets/pick.mp3" preload="auto"></audio>
+  <audio id="explosion" type="audio/mpeg" src="assets/explosion.mp3" preload="auto"></audio>
+  <audio id="kitty" type="audio/mpeg" src="assets/kitty.mp3" preload="auto"></audio>
+  <audio id="tonton" type="audio/mpeg" src="assets/tonton.mp3" preload="auto"></audio>
+</div>
+</body>
