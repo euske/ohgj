@@ -1,34 +1,5 @@
 // game.js
 
-// Player
-function Player(bounds)
-{
-  Actor.call(this, bounds, bounds, '#00ff00');
-  this.velocity = new Vec2(0, 0);
-}
-
-Player.prototype = Object.create(Actor.prototype);
-
-Player.prototype.update = function ()
-{
-  var self = this;
-  var r = this.hitbox.move(this.velocity.x*4, this.velocity.y*4);
-  var f = (function (obj) { return (obj instanceof Wall); });
-  if (this.scene.world.containsRect(r) &&
-      this.scene.findObjects(r, f).length == 0) {
-    this.move(this.velocity.x*4, this.velocity.y*4);
-  }
-};
-
-Player.prototype.collide = function (obj)
-{
-  if (obj instanceof Thing) {
-    obj.alive = false;
-    playSound(this.scene.app.audios.pick);
-  }
-};
-
-
 // InvObj
 function InvObj(bounds, hitbox, tileno)
 {
@@ -42,9 +13,11 @@ InvObj.prototype.render = function (ctx, bx, by)
   var lights = this.scene.lights;
   for (var i = 0; i < lights.length; i++) {
     var light = lights[i];
-    if (light.bounds.containsRect(this.bounds)) {
+    if (light.bounds.overlap(this.bounds)) {
+      ctx.save();
+      light.clip(ctx, bx, by);
       Actor.prototype.render.call(this, ctx, bx, by);
-      break;
+      ctx.restore();
     }
   }
 };
@@ -75,6 +48,14 @@ function Light(bounds)
 
 Light.prototype = Object.create(Sprite.prototype);
 
+Light.prototype.clip = function (ctx, bx, by)
+{
+  ctx.beginPath();
+  ctx.rect(bx+this.bounds.x, by+this.bounds.y,
+	   this.bounds.width, this.bounds.height);
+  ctx.clip();
+};
+
 Light.prototype.update = function ()
 {
   if (this.mdur == 0) {
@@ -84,6 +65,35 @@ Light.prototype.update = function ()
   }
   this.bounds = this.bounds.move(this.move.x*4, this.move.y*4).clamp(this.scene.world);
   this.mdur--;
+};
+
+
+// Player
+function Player(bounds)
+{
+  Actor.call(this, bounds, bounds, '#00ff00');
+  this.velocity = new Vec2(0, 0);
+}
+
+Player.prototype = Object.create(Actor.prototype);
+
+Player.prototype.update = function ()
+{
+  var self = this;
+  var r = this.hitbox.move(this.velocity.x*4, this.velocity.y*4);
+  var f = (function (obj) { return (obj instanceof Wall); });
+  if (this.scene.world.containsRect(r) &&
+      this.scene.findObjects(r, f).length == 0) {
+    this.move(this.velocity.x*4, this.velocity.y*4);
+  }
+};
+
+Player.prototype.collide = function (obj)
+{
+  if (obj instanceof Thing) {
+    obj.alive = false;
+    playSound(this.scene.app.audios.pick);
+  }
 };
 
 
