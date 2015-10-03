@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>ohgj/delivery</title>
+<style>
+b { font-size: 120%; }
+</style>
+<script language="javascript" src="src/utils.js"></script>
+<script language="javascript" src="src/geom.js"></script>
+<script language="javascript" src="src/actor.js"></script>
+<script language="javascript" src="src/scene.js"></script>
+<script language="javascript" src="src/app.js"></script>
+<script language="javascript" src="src/main.js"></script>
+<script language="javascript" src="src/game.js"></script>
+<body text="white" link="cyan" vlink="cyan" bgcolor="black" onload="run(Game);">
+<h1 align=center>Delivery</h1>
+<p>
+Theme: Chain Reaction
+<p>
+1HGJ, Oct. 4th, 2015
+
+<div style="margin: 1em;" align=center>
+  <div style="position:relative; width:640px; height:480px;">
+    <canvas id="main" 
+	    style="position:absolute; top:0; left:0; background:gray;"
+	    width="640" height="480"></canvas>
+  </div>
+</div>
+
+<p>
+<strong>Rules:</strong><br>
+Cats go up, Pigs go right, and Frogs go diagonally down-left.<br>
+Moar chain reactions = moar scores!
+
+<div style="display:none;">
+  <img id="font_b" src="assets/font_b.png">
+  <img id="font_w" src="assets/font_w.png">
+  <img id="sprites" src="assets/sprites8.png">
+  <audio id="kitty" type="audio/mpeg" src="assets/kitty.mp3" preload="auto"></audio>
+  <audio id="kero" type="audio/mpeg" src="assets/kero.mp3" preload="auto"></audio>
+  <audio id="tonton" type="audio/mpeg" src="assets/tonton.mp3" preload="auto"></audio>
+</div>
+</body>
