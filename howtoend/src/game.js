@@ -148,6 +148,7 @@ function Game(app)
   this.frame = new Rectangle(0, 0, app.screen.width, app.screen.height);
   this.bounds = this.frame.inflate(-20, -20);
   this.timelimit = 30;
+  this.plays = 0;
 }
 
 Game.prototype = Object.create(GameScene.prototype);
@@ -202,6 +203,12 @@ Game.prototype.init = function ()
   this.score2 = 0;
   this.timeleft = this.timelimit;
   this.updateStatus();
+
+  if (0 < this.plays) {
+    this.music = this.app.audios.agrace;
+    playSound(this.music);
+  }
+  this.plays++;
 };
 
 Game.prototype.update = function ()
@@ -306,7 +313,7 @@ Game.prototype.mousemove = function (x, y)
   if (this.prevp !== null) {
     var d = this.prevp.distance(p);
     if (4 < d) {
-      this.violence = 0.01;
+      this.violence = 0.02;
     }
   }
   this.prevp = p;
