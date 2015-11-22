@@ -33,7 +33,7 @@ Game.prototype.init = function ()
   var app = this.app;
   var frame = new Rectangle(0, 0, app.screen.width, app.screen.height)
   var textbox = new TextBox(frame);
-  textbox.putText(app.font, ['NOVEMBER 15, 2015'], 'center', 'center');
+  textbox.putText(app.font, ['NOVEMBER 14, 2015'], 'center', 'center');
   this.addObject(textbox);
   this.music = app.audios.rain;
 
