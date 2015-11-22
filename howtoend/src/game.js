@@ -119,9 +119,9 @@ Human.prototype.update = function ()
     this.side = clamp(0, this.side, 2);
     
     var v = clamp(0, this.side, 1);
-    var r = Math.floor(v*255);
-    var g = Math.floor((1.0-v)*255);
-    var b = 0;
+    var r = Math.floor(v*220);
+    var g = Math.floor((1.0-v)*220);
+    var b = Math.floor((1.0-v)*100+60);
     this.tileno = 'rgb('+r+','+g+','+b+')';
     if (this.scene.state == 1 && 20 < this.getTime()) {
       var p = (this.side-1.0)*0.04;
