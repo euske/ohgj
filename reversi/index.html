@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>ohgj/reversi</title>
+<style>
+b { font-size: 120%; }
+</style>
+<script src="src/utils.js"></script>
+<script src="src/geom.js"></script>
+<script src="src/tilemap.js"></script>
+<script src="src/actor.js"></script>
+<script src="src/text.js"></script>
+<script src="src/scene.js"></script>
+<script src="src/app.js"></script>
+<script src="src/main.js"></script>
+<script src="src/game.js"></script>
+<body text="white" link="cyan" vlink="cyan" bgcolor="black" onload="run(Game);">
+<h1 align=center>reversi</h1>
+<p>
+Theme: Day and Night
+<p>
+1HGJ, Jan. 24, 2016
+<p>
+<strong>Goal:</strong>
+<strong style="color:#00ff00">You</strong> <u>avoid</u> 
+nightly <strong style="color:#ff0080">Ghosts</strong> and 
+<u>collect</u> <strong style="color:#ffff00">Coins</strong>!
+Press <strong style="color:black; background:white">Space</strong> to swap day and night!
+
+<div style="margin: 1em;" align=center>
+  <div style="position:relative; width:640px; height:480px;">
+    <canvas id="main" 
+	    style="position:absolute; top:0; left:0; background:gray;"
+	    width="640" height="480"></canvas>
+  </div>
+</div>
+
+<div style="display:none;">
+  <img id="font" src="assets/font.png">
+  <audio id="pick" type="audio/mpeg" src="assets/pick.mp3" preload="auto"></audio>
+  <audio id="hurt" type="audio/mpeg" src="assets/hurt.mp3" preload="auto"></audio>
+  <audio id="swap" type="audio/mpeg" src="assets/swap.mp3" preload="auto"></audio>
+  <audio id="beep" type="audio/mpeg" src="assets/beep.mp3" preload="auto"></audio>
+</div>
+
+<p>
+(There's no gameover/ending, sorry.)
+</body>
