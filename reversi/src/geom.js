@@ -20,6 +20,9 @@ define(Vec2, Object, '', {
   copy: function () {
     return new Vec2(this.x, this.y);
   },
+  norm2: function () {
+    return (this.x*this.x + this.y*this.y);
+  },
   norm: function () {
     return Math.sqrt(this.x*this.x + this.y*this.y);
   },
@@ -46,7 +49,7 @@ define(Vec2, Object, '', {
   move: function (dx, dy) {
     return new Vec2(this.x+dx, this.y+dy);
   },
-  rotate90: function (v) {
+  rot90: function (v) {
     if (v < 0) {
       return new Vec2(this.y, -this.x);
     } else if (0 < v) {
@@ -74,6 +77,9 @@ define(Vec3, Object, '', {
   },
   copy: function () {
     return new Vec3(this.x, this.y, this.z);
+  },
+  norm2: function () {
+    return (this.x*this.x + this.y*this.y + this.z*this.z);
   },
   norm: function () {
     return Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);

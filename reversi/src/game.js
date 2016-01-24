@@ -9,15 +9,21 @@
 'use strict';
 
 var DIRS = [new Vec2(1,0), new Vec2(-1,0), new Vec2(0,1), new Vec2(0,-1)];
-function genMaze(w, h) {
-  var maze = [];
+
+function genArray(w, h, v) {
+  var a = [];
   for (var y = 0; y < h; y++) {
     var row = [];
     for (var x = 0; x < w; x++) {
-      row.push(1);
+      row.push(v);
     }
-    maze.push(row);
+    a.push(row);
   }
+  return a;
+}
+
+function genMaze(w, h) {
+  var maze = genArray(w, h, 1);
   var q = [];
   q.push({p:new Vec2(1, 1), d:new Vec2()});
   while (0 < q.length) {
@@ -30,7 +36,7 @@ function genMaze(w, h) {
       maze[p.y][p.x] = 0;
       var d = obj.d;
       maze[p.y-d.y][p.x-d.x] = 0;
-      for (var i = 0; i < DIRS.length; i++) {
+      for (var i in DIRS) {
 	d = DIRS[i];
 	q.push({p:new Vec2(p.x+d.x*2, p.y+d.y*2), d:d});
       }
@@ -88,7 +94,7 @@ define(Ghost, Actor, 'Actor', {
     return DIRS[rnd(DIRS.length)].scale(this.speed);
   },
 
-  getContactFor: function (range, hitbox, v) {
+  getContactFor: function (v, hitbox, range) {
     var night = this.night;
     var f = (function (c) { return c != night; });
     return this.scene.tilemap.contactTile(this.hitbox, f, v);
@@ -105,6 +111,7 @@ function Player(scene, day, p)
   this.day = day;
   this.speed = 4;
   this.invul = 0;
+  this.lastmove = new Vec2();
 }
 
 define(Player, Actor, 'Actor', {
@@ -136,6 +143,17 @@ define(Player, Actor, 'Actor', {
     }
   },
 
+  move: function (v) {
+    if (0 < v.norm2()) {
+      if (this.isMovable(v)) {
+	this.lastmove = v;
+      } else {
+	v = this.lastmove;
+      }
+    }
+    this._Actor_move(v);
+  },
+  
   collide: function (actor) {
     if (actor instanceof Ghost) {
       if (actor.night == this.day) {
@@ -152,11 +170,11 @@ define(Player, Actor, 'Actor', {
   getPos: function () {
     return this.bounds.center();
   },
-
-  getContactFor: function (range, hitbox, v) {
+  
+  getContactFor: function (v, hitbox, range) {
     var day = this.day;
     var f = (function (c) { return c != day; });
-    return this.scene.tilemap.contactTile(this.hitbox, f, v);
+    return this.scene.tilemap.contactTile(hitbox, f, v);
   },
 
 });
