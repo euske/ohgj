@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>ohgj/tangled</title>
+<style>
+b { font-size: 120%; }
+</style>
+<script src="src/utils.js"></script>
+<script src="src/geom.js"></script>
+<script src="src/tilemap.js"></script>
+<script src="src/actor.js"></script>
+<script src="src/text.js"></script>
+<script src="src/scene.js"></script>
+<script src="src/app.js"></script>
+<script src="src/main.js"></script>
+<script src="src/game.js"></script>
+<body text="white" link="cyan" vlink="cyan" bgcolor="black" onload="run(Game);">
+<h1 align=center>tangled</h1>
+<p>
+Theme: Wave
+<p>
+1HGJ, Jan. 31, 2016
+
+<div style="margin: 1em;" align=center>
+  <div style="position:relative; width:640px; height:480px;">
+    <canvas id="main" 
+	    style="position:absolute; top:0; left:0; background:gray;"
+	    width="640" height="480"></canvas>
+  </div>
+</div>
+
+<div style="display:none;">
+  <img id="font" src="assets/font.png">
+  <audio id="beep" type="audio/mpeg" src="assets/beep.mp3" preload="auto"></audio>
+  <audio id="pick" type="audio/mpeg" src="assets/pick.mp3" preload="auto"></audio>
+  <audio id="explosion" type="audio/mpeg" src="assets/explosion.mp3" preload="auto"></audio>
+  <audio id="select" type="audio/mpeg" src="assets/select.mp3" preload="auto"></audio>
+  <audio id="cancel" type="audio/mpeg" src="assets/cancel.mp3" preload="auto"></audio>
+</div>
+
+</body>
