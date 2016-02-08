@@ -13,6 +13,9 @@ function getRect (pos) {
 
 function Map (bounds) {
   this.bounds = bounds;
+  this.colors = [new Color(1,0,0), null, new Color(1,0,1), 
+		 new Color(0,1,0), new Color(0,1,1), new Color(1,1,0)];
+  this.intensity = [1,0,1,1,1,1];
   this.map = [];
   for (var y = 0; y < bounds.height; y++) {
     var row = [];
@@ -29,29 +32,23 @@ define(Map, Object, '', {
   set: function (p, v) {
     this.map[p.y][p.x] = v;
   },
+  fade: function (moving) {
+    for (var c in this.intensity) {
+      this.intensity[c] = Math.max(this.intensity[c]-0.1, 0);
+    }
+    if (moving) {
+      var c = rnd(this.intensity.length);
+      this.intensity[c] = Math.min(this.intensity[c]+Math.random(), 1);
+    }
+  },
   render: function (ctx, bx, by) {
     for (var y = 0; y < this.map.length; y++) {
       var row = this.map[y];
       for (var x = 0; x < row.length; x++) {
 	var c = row[x];
 	if (c == 0) continue;
-	switch (c) {
-	case -1:
-	  ctx.fillStyle = 'red';
-	  break;
-	case 1:
-	  ctx.fillStyle = 'magenta';
-	  break;
-	case 2:
-	  ctx.fillStyle = 'rgb(0,255,0)';
-	  break;
-	case 3:
-	  ctx.fillStyle = 'cyan';
-	  break;
-	case 4:
-	  ctx.fillStyle = 'yellow';
-	  break;
-	}
+	c += 1;
+	ctx.fillStyle = this.colors[c].setAlpha(this.intensity[c]);
 	ctx.fillRect(x*8+1, y*8+1, 6, 6);
       }
     }
@@ -204,6 +201,7 @@ define(Game, GameScene, 'GameScene', {
       v.x = 0;
     }
     this.player.setMove(v);
+    this.map.fade(!v.isZero());
   },
     
   addScore: function (c) {
