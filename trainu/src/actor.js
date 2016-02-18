@@ -193,11 +193,11 @@ define(TileSprite, Sprite, 'Sprite', {
     ctx.clip();
     var w = this.image.width;
     var h = this.image.height;
-    var dx = Math.floor(this.offset.x/w)*w - this.offset.x;
-    var dy = Math.floor(this.offset.y/h)*h - this.offset.y;
-    for (; dy < this.bounds.height; dy += h) {
-      for (; dx < this.bounds.width; dx += w) {
-	ctx.drawImage(this.image, bx+dx, by+dy);
+    var dx0 = Math.floor(this.offset.x/w)*w - this.offset.x;
+    var dy0 = Math.floor(this.offset.y/h)*h - this.offset.y;
+    for (var dy = dy0; dy < this.bounds.height; dy += h) {
+      for (var dx = dx0; dx < this.bounds.width; dx += w) {
+	ctx.drawImage(this.image, bx+int(dx), by+int(dy));
       }
     }
     ctx.restore();

@@ -132,7 +132,7 @@ define(Game, GameScene, 'GameScene', {
   tick: function () {
     this._GameScene_tick();
     this.background1.offset.x += 2;
-    this.background2.offset.x += 1;
+    this.background2.offset.x += 0.5;
     if (this.nextadd < this.layer.ticks) {
       var rect = new Rectangle(this.screen.width, this.ground.y-20, 32, 20);
       this.addObject(new Block(rect));
