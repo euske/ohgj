@@ -12,10 +12,10 @@
 // Bus
 function Bus(scene, road)
 {
-  var bounds = new Rectangle(road.x, road.centery(), 32, 16);
+  var bounds = new Rectangle(road.x-20, road.y+10, 32, 16);
   var hitbox = new Rectangle(bounds.x, bounds.y+8, bounds.width, 8);
   this._Actor(bounds, hitbox, 0);
-  this.constraints = new Rectangle(road.x, road.y, road.width, 40);
+  this.constraints = new Rectangle(road.x-20, road.y, road.width, 40);
   this.speed = 4;
   this.scene = scene;
   this.movement.x = +1;
@@ -84,6 +84,7 @@ define(Car, Actor, 'Actor', {
 function Game(app)
 {
   this._GameScene(app);
+  this.cars = new Layer();
   Sprite.SIZE = new Vec2(16, 16);
   Sprite.IMAGE = app.images.sprites;
 }
@@ -91,7 +92,8 @@ function Game(app)
 define(Game, GameScene, 'GameScene', {
   init: function () {
     this._GameScene_init();
-
+    this.cars.init();
+    
     var app = this.app;
     this.background2 = new TileSprite(this.screen, this.app.images.background2);
     this.addObject(this.background2);
@@ -101,9 +103,9 @@ define(Game, GameScene, 'GameScene', {
     this.road = new TileSprite(new Rectangle(0, this.screen.height-img.height,
 					     this.screen.width, img.height), img);
     this.addObject(this.road);
-      
+    
     this.bus = new Bus(this, this.road.bounds);
-    this.addObject(this.bus);
+    this.cars.addObject(this.bus);
     
     // show a banner.
     var scene = this;
@@ -124,10 +126,13 @@ define(Game, GameScene, 'GameScene', {
     ctx.fillRect(bx, by, this.screen.width, this.screen.height);
     ctx.fillStyle = 'rgb(128,128,128)';
     this._GameScene_render(ctx, bx, by);
+    this.cars.sprites.sort(function (a,b) { return a.bounds.y-b.bounds.y; });
+    this.cars.render(ctx, bx, by);
   },
 
   tick: function () {
     this._GameScene_tick();
+    this.cars.tick();
     this.background1.offset.x += 2;
     this.background2.offset.x += 0.5;
     this.road.offset.x += this.bus.speed;
@@ -135,7 +140,7 @@ define(Game, GameScene, 'GameScene', {
       var y = rnd(50);
       var speed = (y < 40)? -8 : 1;
       if (40 <= y) { y += 10; }
-      this.addObject(new Car(this, this.road.bounds.y+y, speed));
+      this.cars.addObject(new Car(this, this.road.bounds.y+y, speed));
       this.nextadd = this.layer.ticks + rnd(10, 30);
     }
   },
