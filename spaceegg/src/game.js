@@ -201,6 +201,8 @@ define(Game, GameScene, 'GameScene', {
     this.addObject(this.text_score);
     this.score = 0;
     this.update_score();
+
+    this.app.set_music(this.app.audios.music, 0, 8.0);
   },
 
   tick: function () {

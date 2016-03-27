@@ -4,7 +4,7 @@ PYTHON=python
 SOX=sox
 LAME=lame
 
-ASSETS=egg.mp3 cook.mp3 nom.mp3 explosion.mp3
+ASSETS=egg.mp3 cook.mp3 nom.mp3 explosion.mp3 music.mp3
 
 all: $(ASSETS)
 
