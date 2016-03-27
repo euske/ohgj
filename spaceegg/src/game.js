@@ -182,6 +182,7 @@ function Game(app)
   this._GameScene(app);
   Sprite.SIZE = new Vec2(16, 16);
   Sprite.IMAGE = app.images.sprites;
+  this.highscore = 0;
 }
 
 define(Game, GameScene, 'GameScene', {
@@ -222,6 +223,7 @@ define(Game, GameScene, 'GameScene', {
 
   nom: function () {
     this.score++;
+    this.highscore = Math.max(this.highscore, this.score);
     this.update_score();
     playSound(this.app.audios.nom);
   },
@@ -229,6 +231,7 @@ define(Game, GameScene, 'GameScene', {
   update_score: function () {
     this.text_score.clear();
     this.text_score.putText(['SCORE:'+format(this.score)]);
+    this.text_score.putText(['HISCORE:'+format(this.highscore)], 'right');
   },
 
   set_action: function (action) {
