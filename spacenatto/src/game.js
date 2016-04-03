@@ -92,24 +92,25 @@ define(Player, PhysicalActor, 'PhysicalActor', {
 
 //  Stars
 //
-function Stars(frame, nstars, color, speed, maxdepth)
+function Stars(frame, nstars, color, velocity, maxdepth)
 {
   this._Layer();
   this.frame = frame;
   this.color = (color !== undefined)? color : 'white';
-  this.speed = (speed !== undefined)? speed : -10;
+  this.velocity = (velocity !== undefined)? velocity : new Vec2(-1, 0);
   this.maxdepth = (maxdepth !== undefined)? maxdepth : 3;
   this.objs = [];
   for (var i = 0; i < nstars; i++) {
-    this.objs.push(this.initStar({}));
+    var obj = this.initStar({});
+    obj.p = this.frame.rndpt();
+    this.objs.push(obj);
   }
 }
 define(Stars, Layer, 'Layer', {
   initStar: function (obj) {
-    obj.s = Math.random()*2+1;
     obj.z = Math.random()*this.maxdepth+1;
-    obj.x = rnd(this.frame.width);
-    obj.y = rnd(this.frame.height);
+    obj.s = (Math.random()*2+1) / obj.z;
+    //obj.p = this.frame.rndpt();
     return obj;
   },
 
@@ -117,13 +118,12 @@ define(Stars, Layer, 'Layer', {
     this._Layer_tick();
     for (var i = 0; i < this.objs.length; i++) {
       var obj = this.objs[i];
-      obj.y += this.speed/obj.z;
-      if (obj.y+(obj.s/obj.z) < 0) {
+      obj.p.x += this.velocity.x/obj.z;
+      obj.p.y += this.velocity.y/obj.z;
+      var rect = obj.p.expand(obj.s, obj.s);
+      if (!this.frame.overlap(rect)) {
 	this.initStar(obj);
-	obj.y = this.frame.width;
-      } else if (this.frame.width < obj.x) {
-	this.initStar(obj);
-	obj.x = 0;
+	obj.p = this.frame.modpt(obj.p);
       }
     }
   },
@@ -134,8 +134,8 @@ define(Stars, Layer, 'Layer', {
     by += this.frame.y;
     for (var i = 0; i < this.objs.length; i++) {
       var obj = this.objs[i];
-      var s = obj.s/obj.z;
-      ctx.fillRect(bx+obj.x, by+obj.y, s, s);
+      var rect = obj.p.expand(obj.s, obj.s);
+      ctx.fillRect(bx+rect.x, by+rect.y, rect.width, rect.height);
     }
   },
 });
@@ -161,7 +161,7 @@ define(Game, GameScene, 'GameScene', {
 
     this.nextadd = 30;
 
-    this.stars = new Stars(this.screen, 100);
+    this.stars = new Stars(this.screen, 100, 'white', new Vec2(1,-10));
     
     // show a banner.
     var scene = this;
