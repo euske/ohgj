@@ -135,12 +135,15 @@ class Player extends Entity {
     }
     
     collide(entity: Entity) {
-	if (0 < this.invuln) return;
+	if (this.health <= 0 || 0 < this.invuln) return;
 	if (entity instanceof Mansion) {
 	    this.scene.crash();
 	    this.health--;
 	    this.src = this.scene.sheet.get(3-this.health);
 	    this.invuln = 30;
+	    if (this.health === 0) {
+		this.scene.app.set_music();
+	    }
 	}
     }
 
