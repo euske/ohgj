@@ -54,15 +54,26 @@ class Button extends Sprite {
 	ctx.save();
 	ctx.translate(bx+this.pos.x, by+this.pos.y);
 	ctx.fillStyle = 'red';
+	ctx.beginPath();
+	ctx.arc(0, 0, 100, 0, Math.PI*2, false);
+	ctx.closePath();
+	for (let c of HOLES) {
+	    ctx.arc(c.x, c.y, 10, 0, Math.PI*2, true);
+	    ctx.closePath();
+	}
+	ctx.fill();
 	ctx.strokeStyle = 'gray';
 	ctx.lineWidth = 4;
 	ctx.beginPath();
 	ctx.arc(0, 0, 100, 0, Math.PI*2, false);
-	for (let c of HOLES) {
-	    ctx.arc(c.x, c.y, 10, 0, Math.PI*2, true);
-	}
-	ctx.fill();
+	ctx.closePath();
 	ctx.stroke();
+	for (let c of HOLES) {
+	    ctx.beginPath();
+	    ctx.arc(c.x, c.y, 10, 0, Math.PI*2, true);
+	    ctx.closePath();
+	    ctx.stroke();
+	}
 	ctx.restore();
     }
 }
@@ -105,6 +116,10 @@ class Game extends GameScene {
 	super.tick(t);
     }
 
+    keydown(key:number) {
+	this.init();
+    }
+	
     mousemove(x:number, y:number) {
 	let p = new Vec2(x,y);
 	let hole = this.button.getHole(p);
