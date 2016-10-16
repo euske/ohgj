@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Ghost Shooter</title>
+<style>
+canvas {
+ image-rendering: -moz-crisp-edges;
+ image-rendering: crisp-edges;
+ image-rendering: pixelated;
+}
+</style>
+<script language="javascript" src="js/game.js"></script>
+<body bgcolor="black" text="white" link="cyan" onload="main(Game);">
+<h1 align=center>Ghost Shooter</h1>
+<p>
+One Hour Game Jam, Oct. 16, 2016, "Break It!"
+<div style="margin: 1em;" align=center>
+  <div id="game" style="position: relative; width: 640px; height: 480px;"></div>
+</div>
+<div style="display:none;">
+  <img id="font" src="assets/font.png">
+  <img id="sprites" src="assets/sprites.png">
+  <audio id="explosion" src="assets/explosion.mp3" preload="auto"></audio>
+  <audio id="fire" src="assets/fire.mp3" preload="auto"></audio>
+  <audio id="hit" src="assets/hit.mp3" preload="auto"></audio>
+  <audio id="switch" src="assets/switch.mp3" preload="auto"></audio>
+</div>
+</body>
