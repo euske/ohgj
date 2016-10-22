@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Limey</title>
+<style>
+canvas {
+ cursor: none;
+ image-rendering: -moz-crisp-edges;
+ image-rendering: crisp-edges;
+ image-rendering: pixelated;
+}
+</style>
+<script language="javascript" src="js/game.js"></script>
+<body bgcolor="black" text="white" link="cyan" onload="main(Game,160,120);">
+<h1 align=center>Limey</h1>
+<div style="margin: 1em;" align=center>
+<p>
+One Hour Game Jam, Ocr. 23, 2016, "Lime"
+<p>
+<strong><u>To Play: Control the Lime to kill the sailors of both sides!</u></strong>
+  <div id="game" style="position: relative; width: 640px; height: 480px;"></div>
+</div>
+<div style="display:none;">
+  <img id="font" src="assets/font.png">
+  <img id="sprites" src="assets/sprites.png">
+  <img id="background" src="assets/background.png">
+  <audio id="throw" src="assets/throw.mp3" preload="auto"></audio>
+  <audio id="splash" src="assets/splash.mp3" preload="auto"></audio>
+  <audio id="win" src="assets/win.mp3" preload="auto"></audio>
+</div>
+</body>
