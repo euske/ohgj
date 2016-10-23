@@ -40,10 +40,11 @@ class Player extends Entity {
     update() {
 	super.update();
 	if (this.getTime() < this.locked) {
-	    if (0 < this.locked) {
-		this.locked = 0;
-		playSound(SOUNDS['throw']);
-	    }
+	    return;
+	}
+	if (0 < this.locked) {
+	    this.locked = 0;
+	    playSound(SOUNDS['throw']);
 	}
 	this.movePos(this.usermove);
 	this.movePos(this.movement);
