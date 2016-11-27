@@ -74,10 +74,10 @@ class WorldEntity extends Entity {
     }
     
     getObstaclesFor(range: Rect, v: Vec2, context: string): Collider[] {
-	let ents = this.game.layer.findEntities((e:Entity) => {
-	    return (e instanceof Cactus);
-	});
-	return ents.map((e:Entity) => { return e.getCollider() as Rect; });
+	let ents = this.game.layer.findEntities(
+	    (e:Entity) => { return (e instanceof Cactus) },
+	    null, range);
+	return ents.map((e:Entity) => { return e.getCollider(); });
     }
 
     getFencesFor(range: Rect, v: Vec2, context: string): Rect[] {
