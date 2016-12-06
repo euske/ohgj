@@ -1,6 +1,6 @@
 OHGJ
 ====
 
-This is a repository for One Hour Game Jam http://weekjam.com/
+This is a repository for One Hour Game Jam http://onehourgamejam.com/
 
-The finished games should be available at http://ludumdare.tabesugi.net/
+The finished games should be available at https://games.tabesugi.net/ohgj/
