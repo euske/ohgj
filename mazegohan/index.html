@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Maze Gohan</title>
+<style>
+canvas {
+ cursor: none;
+ image-rendering: -moz-crisp-edges;
+ image-rendering: crisp-edges;
+ image-rendering: pixelated;
+}
+</style>
+<script language="javascript" src="js/game.js"></script>
+<body bgcolor="black" text="white" link="cyan" onload="main(Game);">
+<h1 align=center>Maze Gohan</h1>
+<div style="margin: 1em;" align=center>
+  <p> One Hour Game Jam, Feb. 5, 2017, "<em>Complete and Utter Nonsense</em>"
+  <p><u>This game is actually beatable. Do it.</u>
+  <div id="game" style="position: relative; width: 640px; height: 480px;"></div>
+  <p>Fun fact: "Maze Gohan" means mixed rice in Japanese.
+</div>
+<div style="display:none;">
+  <img id="font" src="assets/font.png">
+  <img id="sprites" src="assets/sprites.png">
+  <audio id="flip" src="assets/flip.mp3" preload="auto"></audio>
+  <audio id="goal" src="assets/goal.mp3" preload="auto"></audio>
+  <audio id="music" src="assets/music.mp3" loop="true" preload="auto"></audio>
+  <audio id="endingoo" src="assets/endingoo.mp3" loop="true" preload="auto"></audio>
+</div>
+</body>
