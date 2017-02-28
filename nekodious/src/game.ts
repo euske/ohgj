@@ -15,7 +15,7 @@ let FONT: Font;
 let SPRITES:ImageSpriteSheet;
 let NEKO:ImageSource;
 addInitHook(() => {
-    FONT = new Font(IMAGES['font'], 'white');
+    FONT = new ShadowFont(IMAGES['font'], 'white');
     SPRITES = new ImageSpriteSheet(
 	IMAGES['sprites'], new Vec2(16,16), new Vec2(8,8));
     NEKO = new HTMLImageSource(
@@ -77,6 +77,10 @@ class Player extends Entity {
 	    }
 	    this.nextfire--;
 	}
+	let terrain = this.game.terrain;
+	if (terrain.findTileByCoord(terrain.isObstacle, this.sprite.getBounds())) {
+	    this.die();
+	}
     }
 
     setFire(firing: boolean) {
@@ -98,10 +102,14 @@ class Player extends Entity {
 
     collidedWith(entity: Entity) {
 	if (entity instanceof EnemyBase) {
-	    playSound(SOUNDS['explosion']);
-	    this.stop();
-	    this.chain(new Explosion(this.pos));
+	    this.die();
 	}
+    }
+
+    die() {
+	playSound(SOUNDS['explosion']);
+	this.stop();
+	this.chain(new Explosion(this.pos));
     }
 }
 
@@ -164,15 +172,62 @@ class Enemy2 extends EnemyBase {
 }
 
 
+
+//  Terrain
+// 
+class Terrain extends TileMap {
+    
+    offset: number;
+    cy: number;
+
+    constructor(width: number, height: number) {
+	super(16, width, height);
+	this.isObstacle = ((c:number) => { return c != 0; });
+	this.offset = 0;
+	this.cy = 0;
+    }
+    
+    proceed(speed: number) {
+	this.offset += speed;
+	if (16 <= this.offset) {
+	    let dx = (this.offset % 16);
+	    let dw = int((this.offset-dx)/16);
+	    this.shift(-dw, 0);
+	    // Generate new tiles.
+	    for (let x = this.width-dw; x < this.width; x++) {
+		for (let y = 0; y < this.height; y++) {
+		    let c = 0;
+		    if (0 < this.cy) {
+			c = (y < this.cy)? 1 : 0;
+		    } else if (this.cy < 0) {
+			c = (this.height+this.cy <= y)? 1 : 0;
+		    }
+		    this.set(x, y, c);
+		}
+	    }
+	    this.offset = dx;
+	    this.cy = clamp(-this.height+1, this.cy+rnd(3)-1, this.height-1);
+	}
+    }
+
+    render(ctx: CanvasRenderingContext2D, bx: number, by: number) {
+	this.renderFromTopRight(
+	    ctx, bx-this.offset, by+8,
+	    (x,y,c) => { return (c <= 0)? null : SPRITES.get(c-1); });
+    }
+}
+
+
 //  Game
 // 
 class Game extends GameScene {
 
     player: Player;
-    stars: StarSprite;
     nextenemy: number;		// Enemy spawning counter.
     score: number;
     scoreBox: TextBox;
+    terrain: Terrain;
+    stars: StarSprite;
 
     init() {
 	super.init();
@@ -180,6 +235,7 @@ class Game extends GameScene {
 	this.player = new Player(this, this.screen.center());
 	this.player.chain(new DelayTask(2, () => { this.init(); }));
 	this.add(this.player);
+	this.terrain = new Terrain(22, 15);
 	this.stars = new StarSprite(this.screen, 100);
 	this.nextenemy = 0;
 	this.score = 0;
@@ -208,6 +264,7 @@ class Game extends GameScene {
 	    this.add(enemy);
 	    this.nextenemy = 10+rnd(20);
 	}
+	this.terrain.proceed(4);
 	this.nextenemy--;
     }
 
@@ -232,6 +289,7 @@ class Game extends GameScene {
 	ctx.fillRect(bx, by, this.screen.width, this.screen.height);
 	super.render(ctx, bx, by);
 	this.stars.render(ctx, bx, by);
+	this.terrain.render(ctx, bx, by);
 	this.scoreBox.render(ctx, bx, by);
     }
 }
