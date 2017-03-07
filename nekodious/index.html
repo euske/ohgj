@@ -5,6 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>Nekodious - MiniLD #72</title>
 <style>
+div { margin: 0; padding: 0; }
 canvas {
  cursor: none;
  image-rendering: -moz-crisp-edges;
@@ -17,7 +18,10 @@ canvas {
 <h1 align=center>Nekodious</h1>
 <div style="margin: 1em;" align=center>
   <p> MiniLD #72 "Elympics"
-  <div id="game" style="position: relative; width: 640px; height: 480px;"></div>
+  <div style="position: relative; width: 640px;">
+    <div id="game" style="position: absolute; width: 640px; height: 480px;"></div>
+    <input id="username" value="kitty" style="position: absolute; right:8px; top: 8px;">
+  </div>
 </div>
 <div style="display:none;">
   <img id="font" src="assets/font.png">

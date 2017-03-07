@@ -12,8 +12,9 @@
 
 
 //  Initialize the resources.
-const APIURL = 'https://dollarone.games/elympics/submitHighscore';
-const APIKEY = 'WonderfulCheeryHedgehog';
+const SUBMITURL = 'https://dollarone.games/elympics/submitHighscore';
+const GETURL = 'https://dollarone.games/elympics/getHighscores';
+const APIKEY = 'BrightStripedHen';
 let FONT: Font;
 let SPRITES:ImageSpriteSheet;
 let NEKO:ImageSource;
@@ -27,6 +28,11 @@ addInitHook(() => {
     EXPLOSION = new HTMLImageSource(
 	IMAGES['sprites'], new Rect(48,16,32,32), new Rect(-16,-16,32,32));    
 });
+
+function getFormText(id: string): string {
+    var e = document.getElementById(id);
+    return (e as HTMLInputElement).value;
+}
 
 
 //  Bullet
@@ -263,27 +269,33 @@ class Terrain extends TileMap {
 class Game extends GameScene {
 
     scoreBox: TextBox;
+    highScoreBox: TextBox;
     player: Player;
     terrain: Terrain;
     stars: StarSprite;
-    
+
+    gameover: boolean;
     score: number;
     speed: number;
     nextenemy: number;
 
     init() {
 	super.init();
-	this.scoreBox = new TextBox(this.screen.inflate(-8,-8), FONT);
+	this.scoreBox = new TextBox(new Rect(4, 4, 78, 12), FONT);
+	this.scoreBox.background = 'rgba(0,0,0,0.5)';
+	this.scoreBox.padding = 2;
 	this.player = new Player(this, this.screen.center());
-	this.player.stopped.subscribe(() => { this.gameover(); });
+	this.player.stopped.subscribe(() => { this.endGame(); });
 	this.add(this.player);
 	this.terrain = new Terrain(22, 15);
 	this.stars = new StarSprite(this.screen, 100);
-	
+
+	this.gameover = false;
+	this.score = 0;
 	this.speed = -4;
 	this.nextenemy = 0;
-	this.score = 0;
 	this.updateScore();
+	this.highScoreBox = null;
 	APP.setMusic(SOUNDS['music'], 0, 32.0);
     }
 
@@ -299,14 +311,25 @@ class Game extends GameScene {
 	this.terrain.proceed(-this.speed);
     }
 
+    onKeyDown(key: number) {
+	if (this.gameover) {
+	    this.init();
+	}
+    }
     onButtonPressed(keysym: KeySym) {
-	this.player.setFire(true);
+	if (!this.gameover) {
+	    this.player.setFire(true);
+	}
     }
     onButtonReleased(keysym: KeySym) {
-	this.player.setFire(false);
+	if (!this.gameover) {
+	    this.player.setFire(false);
+	}
     }
     onDirChanged(v: Vec2) {
-	this.player.setMove(v);
+	if (!this.gameover) {
+	    this.player.setMove(v);
+	}
     }
 
     spawnEnemy() {
@@ -335,23 +358,27 @@ class Game extends GameScene {
 	this.add(banner);
     }
 
-    gameover() {
+    endGame() {
 	let banner = new BannerBox(this.screen, FONT, ['GAME OVER!!']);
 	banner.lifetime = 1.5;
 	banner.interval = 0.5;
 	this.add(banner);
-	this.add(new DelayTask(2, () => { this.init(); }));
-	var name = 'kitty';
-	var req = new XMLHttpRequest();
-	req.addEventListener('load', () => { this.showHighScores(); });
-	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	req.open('POST', APIURL);
-	req.send('key='+APIKEY+'&name='+name+'&score='+this.score);
-    }	
+	this.gameover = true;
+	APP.lockKeys();
+	var name = getFormText('username') || 'kitty';
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', SUBMITURL);
+	xhr.addEventListener('load', () => { this.showHighScores(); });
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr.send('key='+APIKEY+'&name='+name+'&score='+this.score);
+	log('name='+name+', score='+this.score);
+    }
     
     addScore() {
-	this.score++;
-	this.updateScore();
+	if (!this.gameover) {
+	    this.score++;
+	    this.updateScore();
+	}
     }
 
     updateScore() {
@@ -360,6 +387,29 @@ class Game extends GameScene {
     }
 
     showHighScores() {
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener('load', () => {
+	    var data = JSON.parse(xhr.responseText);
+	    if (data) {
+		data.sort(function (a:any,b:any) { return b.score-a.score; });
+		var text = new TextBox(this.screen.resize(150, 100), FONT);
+		text.borderColor = 'white';
+		text.padding = 4;
+		text.background = 'rgba(0,0,0,0.5)'
+		var y = 8;
+		for (var e of data) {
+		    if (e.name && e.score) {
+			text.addSegment(new Vec2(10, y), e.name);
+			text.addSegment(new Vec2(100, y), e.score.toString());
+			y += 15;
+		    }
+		    if (85 <= y) break;
+		}
+		this.highScoreBox = text;
+	    }
+	});
+	xhr.open('GET', GETURL+'?key='+APIKEY);
+	xhr.send();
     }
 
     render(ctx: CanvasRenderingContext2D, bx: number, by: number) {
@@ -369,5 +419,8 @@ class Game extends GameScene {
 	this.stars.render(ctx, bx, by);
 	this.terrain.render(ctx, bx, by);
 	this.scoreBox.render(ctx, bx, by);
+	if (this.highScoreBox !== null) {
+	    this.highScoreBox.render(ctx, bx, by);
+	}
     }
 }

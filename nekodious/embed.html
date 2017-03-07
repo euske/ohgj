@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Nekodious - MiniLD #72</title>
 <style>
+div { margin: 0; padding: 0; }
 canvas {
  cursor: none;
  image-rendering: -moz-crisp-edges;
@@ -15,7 +16,10 @@ canvas {
 </style>
 <script language="javascript" src="js/game.js"></script>
 <body style="width:100%; height:100%; margin:0; padding:0;" onload="main(Game);">
-<div id="game" style="position: absolute; width:100%; height:100%; margin:0; padding:0;"></div>
+  <div style="position: relative; width: 640px;">
+    <div id="game" style="position: absolute; width: 640px; height: 480px;"></div>
+    <input id="username" value="kitty" style="position: absolute; right:8px; top: 8px;">
+  </div>
 <div style="display:none;">
   <img id="font" src="assets/font.png">
   <img id="sprites" src="assets/sprites.png">
