@@ -134,6 +134,7 @@ class Game extends GameScene {
 	this.color = (r << 16) | (g << 8) | (b << 0);
 	this.nextColor = int(Date.now()/1000) + rnd(3,7);
 	playSound(SOUNDS['put']);
+	this.paint = false;
     }
     
     updateScore() {
