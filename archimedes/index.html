@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Archimedes</title>
+<style>
+canvas {
+ image-rendering: -moz-crisp-edges;
+ image-rendering: crisp-edges;
+ image-rendering: pixelated;
+}
+</style>
+<script language="javascript" src="js/game.js"></script>
+<body bgcolor="black" text="white" link="cyan" onload="main(Game);">
+<h1 align=center>Archimedes</h1>
+<div style="margin: 1em;" align=center>
+  <p> One Hour Game Jam, "Gold", Apr. 30, 2017
+  <div id="game" style="position: relative; width: 640px; height: 480px;"></div>
+  <p> How To Play: Collect <u style="font-weight:bold; color:gold;">real gold</u> (heavier and falls faster).
+</div>
+<div style="display:none;">
+  <img id="font" src="assets/font.png">
+  <audio id="good" src="assets/good.mp3" preload="auto"></audio>
+  <audio id="bad" src="assets/bad.mp3" preload="auto"></audio>
+</div>
+</body>
