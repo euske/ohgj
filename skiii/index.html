@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Speed Skiiing</title>
+<style>
+canvas {
+ cursor: none;
+ image-rendering: -moz-crisp-edges;
+ image-rendering: crisp-edges;
+ image-rendering: pixelated;
+}
+</style>
+<script language="javascript" src="game.js"></script>
+<body bgcolor="black" text="white" link="cyan" onload="main();">
+<h1 align=center>Speed Skiiing</h1>
+<div style="margin: 1em;" align=center>
+  <p> One Hour Game Jam, Dec. 17, 2017, Theme: "Snow"
+  <div style="position: relative; width: 640px; height: 480px;">
+    <canvas id="game" width="640" height="480">
+  </div>
+  <p> Try to keep the maximum speed as long as possible!
+</div>
+<div style="display:none;">
+  <img id="sprites" src="sprites.png">
+  <audio id="hit" src="hit.mp3" preload="auto"></audio>
+  <audio id="maximum" src="maximum.mp3" preload="auto"></audio>
+</div>
+</body>
