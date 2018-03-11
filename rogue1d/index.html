@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Rogue 1D</title>
+<style>
+canvas {
+ image-rendering: -moz-crisp-edges;
+ image-rendering: crisp-edges;
+ image-rendering: pixelated;
+}
+</style>
+<script language="javascript" src="js/game.js"></script>
+<body bgcolor="black" text="white" link="cyan" onload="main(Game,80,60);">
+<h1 align=center>Rogue 1D</h1>
+<div style="margin: 1em;" align=center>
+  <p> <a href="http://onehourgamejam.com/">One Hour Game Jam</a>, Mar. 11, 2018, "Brutal Roguelike Adventure"
+  <div id="game" style="position: relative; width: 640px; height: 480px;"></div>
+</div>
+<div align=right>Made with <a href="https://github.com/euske/euskit">Euskit</a>.</div>
+<div style="display:none;">
+  <img id="font" src="assets/font.png">
+  <audio id="beep" src="assets/beep.mp3" preload="auto"></audio>
+  <audio id="step" src="assets/step.mp3" preload="auto"></audio>
+  <audio id="attack" src="assets/attack.mp3" preload="auto"></audio>
+  <audio id="pickup" src="assets/pickup.mp3" preload="auto"></audio>
+  <audio id="gameover" src="assets/gameover.mp3" preload="auto"></audio>
+</div>
+</body>
